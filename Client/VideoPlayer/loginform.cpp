@@ -241,7 +241,7 @@ bool LoginForm::check_login(const QString& user, const QString& pwd)
     request.setUrl(QUrl(url));
     record->config()["password"] = ui->pwdEdit->text();
     record->config()["user"] = ui->nameEdit->text();
-    this->setEnabled(false);
+    this->setEnabled(false); //防止用户狂点请求
     net->get(request);
     return true;
     /*

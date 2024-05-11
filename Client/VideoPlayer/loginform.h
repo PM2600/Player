@@ -35,6 +35,7 @@ protected slots:
 signals:
     void login(const QString& nick, const QByteArray& head);
 protected:
+    //登录界面移动
     virtual void mouseMoveEvent(QMouseEvent* event);
     virtual void mousePressEvent(QMouseEvent* event);
     virtual void mouseReleaseEvent(QMouseEvent* event);

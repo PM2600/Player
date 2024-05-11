@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
     QApplication::addLibraryPath("./plugins");
     Widget w;
     LoginForm login;
-    w.hide();
+    w.hide();//主窗口隐藏
     login.show();
     login.connect(&login, SIGNAL(login(const QString&, const QByteArray&)),
                   &w, SLOT(on_show(const QString&, const QByteArray&)));

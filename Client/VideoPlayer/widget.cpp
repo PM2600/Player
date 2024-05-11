@@ -90,7 +90,7 @@ Widget::Widget(QWidget* parent)
     ui->preButton->setAttribute(Qt::WA_TranslucentBackground, true);
     //列表单选
     ui->listWidget->setSelectionMode(QAbstractItemView::SingleSelection);
-    ui->horizontalSlider->setRange(0, 1000);
+    ui->horizontalSlider->setRange(0, 1000);//水平进度条
     ui->horizontalSlider->setValue(0);
     //connect(ui->horizontalSlider, SIGNAL(sliderPressed()),
     //        this, SLOT(on_horizontalSlider_sliderPressed()));
@@ -643,7 +643,7 @@ void Widget::on_scaleButton_clicked()
     }
     else
     {
-        killTimer(timesID);
+        killTimer(timesID);//干掉定时器，防止产生多个定时器
         timesID = -1;
         //播放倍数
         ui->time0_5->setVisible(false);
