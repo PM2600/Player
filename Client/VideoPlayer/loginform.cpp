@@ -22,7 +22,7 @@ LoginForm::LoginForm(QWidget* parent) :
     ui->setupUi(this);
     this->setWindowFlag(Qt::FramelessWindowHint);
     //头像进行缩放
-    ui->nameEdit->setPlaceholderText(u8"用户名/手机号/邮箱");
+    ui->nameEdit->setPlaceholderText(u8"用户名/手机号/邮箱"); //提示信息
     ui->nameEdit->setFrame(false);
     ui->nameEdit->installEventFilter(this);
     ui->pwdEdit->setPlaceholderText(u8"填写密码");
