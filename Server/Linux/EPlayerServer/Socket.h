@@ -12,6 +12,8 @@ class Buffer : public std::string
 public:
 	Buffer() : std::string(){}
 	Buffer(size_t size) : std::string() { resize(size); }
+	Buffer(const std::string& str) : std::string(str) {}
+	Buffer(const char* str) : std::string(str) {}
 
 	operator char* () { return (char*)c_str(); }
 	operator char* () const { return (char*)c_str(); }
@@ -93,11 +95,16 @@ public:
 	virtual int Close() {
 		m_status = 3;
 		if (m_socket != -1) {
+			unlink(m_param.ip);
 			int fd = m_socket;
 			m_socket = -1;
 			close(fd);
 		}
+		return 0;
 	}
+
+	virtual operator int() { return m_socket; }
+	virtual operator int() const { return m_socket; }
 protected:
 	int m_socket;
 	//状态：0初始化未完成 1初始化完成 2连接完成 3已经关闭
