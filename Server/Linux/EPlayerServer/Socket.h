@@ -128,6 +128,9 @@ public:
 		int type = (m_param.attr & SOCK_ISUDP) ? SOCK_DGRAM : SOCK_STREAM;
 		if(m_socket == -1)
 			m_socket = socket(PF_LOCAL, type, 0);
+		else {
+			m_status = 2; //accept来的套接字，已经处于连接状态
+		}
 		if (m_socket == -1) return -2;
 		int ret = 0;
 		if (m_param.attr & SOCK_ISSERVER) {
@@ -143,9 +146,11 @@ public:
 			ret = fcntl(m_socket, F_SETFL, option);
 			if (ret == -1) return -6;
 		}
-		m_status = 1;
+		if(m_status == 0)
+			m_status = 1;
 		return 0;
 	}
+
 	virtual int Link(CSocketBase** pClient = NULL) {
 		if (m_status <= 0 || m_socket == -1) return -1;
 		int ret = 0;
@@ -154,6 +159,7 @@ public:
 			CSockParam param;
 			socklen_t len = sizeof(sockaddr_un);
 			int fd = accept(m_socket, param.addrun(), &len);
+
 			if (fd == -1) return -3;
 			*pClient = new CLocalSocket(fd);
 			if (*pClient == NULL) return -4;

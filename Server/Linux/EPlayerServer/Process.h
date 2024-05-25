@@ -9,7 +9,7 @@
 class CProcess {
 public:
     CProcess() {
-        m_func = nullptr;
+        m_func = NULL;
         memset(pipes, 0, sizeof(pipes));
     }
     ~CProcess() {

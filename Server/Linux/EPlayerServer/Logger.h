@@ -31,7 +31,10 @@ public:
 	LogInfo& operator<<(const T& data) {
 		std::stringstream stream;
 		stream << data;
-		m_buf += stream.str();
+		printf("%s(%d):[%s][%s]\n", __FILE__, __LINE__, __FUNCTION__, stream.str().c_str());
+		m_buf += stream.str().c_str();
+		printf("%s(%d):[%s]%s\n", __FILE__, __LINE__, __FUNCTION__, (char*)m_buf);
+
 		return *this;
 	}
 
@@ -49,7 +52,7 @@ public:
 		char curpath[256] = "";
 		getcwd(curpath, sizeof(curpath));
 		m_path = curpath;
-		m_path += "log" + GetTimeStr() + ".log";
+		m_path += "/log/" + GetTimeStr() + ".log";
 		printf("%s(%d):[%s] path=%s\n", __FILE__, __LINE__, __FUNCTION__, (char*)m_path);
 	}
 
@@ -81,11 +84,17 @@ public:
 			Close();
 			return -5;
 		}
+
+		ret = m_epoll.Add(*m_server, EpollData((void*)m_server), EPOLLIN | EPOLLERR);
+		if (ret != 0) {
+			Close();
+			return -6;
+		}
 		ret = m_thread.Start();
 		if (ret != 0) {
 			printf("%s(%d):%s pid=%d errno:%d msg:%s ret:%d\n", __FILE__, __LINE__, __FUNCTION__, getpid(), errno, strerror(errno), ret);
 			Close();
-			return -6;
+			return -7;
 		}
 		printf("%s(%d):%s pid=%d\n", __FILE__, __LINE__, __FUNCTION__, getpid());
 		return 0;
@@ -103,18 +112,23 @@ public:
 	}
 
 	static void Trace(const LogInfo& info) {
+		int ret = 0;
 		static thread_local CLocalSocket client;
 		if (client == -1) {
-			int ret = 0;
-			client.Init(CSockParam("./log/server.sock", 0));
+			ret = client.Init(CSockParam("./log/server.sock", 0));
 			if (ret != 0){
 #ifdef _DEBUG
-				printf("%s(%d):[%s] ret=%s\n", __FILE__, __LINE__, __FUNCTION__, ret);
+				printf("%s(%d):[%s] ret=%d\n", __FILE__, __LINE__, __FUNCTION__, ret);
 #endif
 				return;
 			}
+			printf("%s(%d):[%s] ret=%d client=%d\n", __FILE__, __LINE__, __FUNCTION__, ret, (int)client);
+			ret = client.Link();
+			printf("%s(%d):[%s] ret=%d client=%d\n", __FILE__, __LINE__, __FUNCTION__, ret, (int)client);
+
 		}
-		client.Send(info);
+		ret = client.Send(info);
+		printf("%s(%d):[%s] ret=%d client=%d\n", __FILE__, __LINE__, __FUNCTION__, ret, (int)client);
 	}
 
 	static Buffer GetTimeStr() {
@@ -123,7 +137,7 @@ public:
 		ftime(&tmb);
 		tm* pTm = localtime(&tmb.time);
 		int nSize = snprintf(result, result.size(),
-			"%04d-%02d-%02d==%02d-%02d-%02d.%03d",
+			"%04d-%02d-%02d_%02d-%02d-%02d.%03d",
 			pTm->tm_year + 1900,
 			pTm->tm_mon + 1,
 			pTm->tm_mday,
@@ -136,10 +150,14 @@ public:
 	}
 private:
 	int ThreadFunc() {
+		printf("%s(%d):[%s] %d\n", __FILE__, __LINE__, __FUNCTION__, m_thread.isValid());
+		printf("%s(%d):[%s] %d\n", __FILE__, __LINE__, __FUNCTION__, (int)m_epoll);
+		printf("%s(%d):[%s] %p\n", __FILE__, __LINE__, __FUNCTION__, m_server);
 		EPEvents events;
 		std::map<int, CSocketBase*> mapClients;
-		while (m_thread.isValid() && m_epoll != -1 && m_server != NULL) {
+		while (m_thread.isValid() && (m_epoll != -1) && (m_server != NULL)) {
 			ssize_t ret = m_epoll.WaitEvents(events, 1);
+			//printf("%s(%d):[%s] ret=%d\n", __FILE__, __LINE__, __FUNCTION__, ret);
 			if (ret < 0) break;
 			if (ret > 0) {
 				ssize_t i = 0;
@@ -148,11 +166,17 @@ private:
 						break;
 					}
 					else if (events[i].events & EPOLLIN) {
+						printf("%s(%d):[%s] m_server=%p clientfd=%p\n", __FILE__, __LINE__, __FUNCTION__, m_server, events[i].data.ptr);
+
 						if (events[i].data.ptr == m_server) {
 							CSocketBase* pClient = NULL;
 							int r = m_server->Link(&pClient);
+							printf("%s(%d):[%s] r=%d\n", __FILE__, __LINE__, __FUNCTION__, r);
+
 							if (r < 0)continue;
 							r = m_epoll.Add(*pClient, EpollData((void*)pClient), EPOLLIN | EPOLLERR);
+							printf("%s(%d):[%s] r=%d\n", __FILE__, __LINE__, __FUNCTION__, r);
+
 							if (r < 0) {
 								delete pClient;
 								continue;
@@ -164,15 +188,20 @@ private:
 							mapClients[*pClient] = pClient;
 						}
 						else {
+							printf("%s(%d):[%s] ptr=%p\n", __FILE__, __LINE__, __FUNCTION__, events[i].data.ptr);
+
 							CSocketBase* pClient = (CSocketBase*)events[i].data.ptr;
 							if (pClient != NULL) {
 								Buffer data(1024 * 1024);
 								int r = pClient->Recv(data);
+								printf("%s(%d):[%s] r=%d\n", __FILE__, __LINE__, __FUNCTION__, r);
+
 								if (r <= 0) {
 									delete pClient;
 									mapClients[*pClient] = NULL;
 								}
 								else {
+									printf("%s(%d):[%s] data=%s\n", __FILE__, __LINE__, __FUNCTION__, (char*)data);
 									WriteLog(data);
 								}
 							}
@@ -228,9 +257,9 @@ private:
 
 //ÄÚ´æµ¼³ö 
 // 00 01 02 65.... ; ...a...
-#define DUMPI(data, size) LogInfo(__FILE__, __LINE__, __FUNCTION__, getpid(), pthread_self(), LOG_INFO, data, size)
-#define DUMPD(data, size) LogInfo(__FILE__, __LINE__, __FUNCTION__, getpid(), pthread_self(), LOG_DEBUG, data, size)
-#define DUMPW(data, size) LogInfo(__FILE__, __LINE__, __FUNCTION__, getpid(), pthread_self(), LOG_WARNING, data, size)
-#define DUMPE(data, size) LogInfo(__FILE__, __LINE__, __FUNCTION__, getpid(), pthread_self(), LOG_ERROR, data, size)
-#define DUMPF(data, size) LogInfo(__FILE__, __LINE__, __FUNCTION__, getpid(), pthread_self(), LOG_FATAL, data, size)
+#define DUMPI(data, size) CLoggerServer::Trace(LogInfo(__FILE__, __LINE__, __FUNCTION__, getpid(), pthread_self(), LOG_INFO, data, size))
+#define DUMPD(data, size) CLoggerServer::Trace(LogInfo(__FILE__, __LINE__, __FUNCTION__, getpid(), pthread_self(), LOG_DEBUG, data, size))
+#define DUMPW(data, size) CLoggerServer::Trace(LogInfo(__FILE__, __LINE__, __FUNCTION__, getpid(), pthread_self(), LOG_WARNING, data, size))
+#define DUMPE(data, size) CLoggerServer::Trace(LogInfo(__FILE__, __LINE__, __FUNCTION__, getpid(), pthread_self(), LOG_ERROR, data, size))
+#define DUMPF(data, size) CLoggerServer::Trace(LogInfo(__FILE__, __LINE__, __FUNCTION__, getpid(), pthread_self(), LOG_FATAL, data, size))
 #endif

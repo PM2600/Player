@@ -50,7 +50,7 @@ public:
 	}
 
 	int Pause() {
-		if (m_thread == 0) return -1; //!!!!!!!!!!!!!
+		if (m_thread != 0) return -1; //!!!!!!!!!!!!!
 		if (m_bpaused) {
 			m_bpaused = false;
 			return 0;
@@ -81,7 +81,7 @@ public:
 	}
 
 	bool isValid() const {
-		return m_thread == 0;
+		return m_thread != 0;
 	}
 private:
 	static void* ThreadEntry(void* arg) {
