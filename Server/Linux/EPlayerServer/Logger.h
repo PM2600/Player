@@ -182,8 +182,8 @@ private:
 								continue;
 							}
 							auto it = mapClients.find(*pClient);
-							if (it->second != NULL) {
-								delete it->second;
+							if (it != mapClients.end()) {
+								if(it->second) delete it->second;
 							}
 							mapClients[*pClient] = pClient;
 						}
