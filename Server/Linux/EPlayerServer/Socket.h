@@ -24,6 +24,7 @@ enum SockAttr {
 	SOCK_ISSERVER = 1,    //1表示是服务器 0表示是客户端
 	SOCK_ISNONBLOCK = 2,  //0表示阻塞 1表示非阻塞
 	SOCK_ISUDP = 4,	      //0表示tcp 1表示udp
+	SOCK_ISIP = 8,		  //1表示IP协议 0表示本地套接字
 };
 
 class CSockParam {
@@ -95,7 +96,8 @@ public:
 	virtual int Close() {
 		m_status = 3;
 		if (m_socket != -1) {
-			unlink(m_param.ip);
+			if(m_param.attr & SOCK_ISSERVER && ((m_param.attr & SOCK_ISIP) == 0))
+				unlink(m_param.ip);
 			int fd = m_socket;
 			m_socket = -1;
 			close(fd);
@@ -112,29 +114,38 @@ protected:
 	CSockParam m_param;
 };
 
-class CLocalSocket : public CSocketBase {
+class CSocket : public CSocketBase {
 public:
-	CLocalSocket() : CSocketBase(){}
-	CLocalSocket(int sock) : CSocketBase() {
+	CSocket() : CSocketBase(){}
+	CSocket(int sock) : CSocketBase() {
 		m_socket = sock;
 	}
-	virtual ~CLocalSocket() {
+	virtual ~CSocket() {
 		Close();
 	}
 public:
 	virtual int Init(const CSockParam& param) {
 		if (m_status != 0) return -1;
 		m_param = param;
+
 		int type = (m_param.attr & SOCK_ISUDP) ? SOCK_DGRAM : SOCK_STREAM;
-		if(m_socket == -1)
-			m_socket = socket(PF_LOCAL, type, 0);
+		if (m_socket == -1) {
+			if(param.attr & SOCK_ISIP)
+				m_socket = socket(PF_INET, type, 0);
+			else
+				m_socket = socket(PF_LOCAL, type, 0);
+		}
 		else {
 			m_status = 2; //accept来的套接字，已经处于连接状态
 		}
 		if (m_socket == -1) return -2;
 		int ret = 0;
 		if (m_param.attr & SOCK_ISSERVER) {
-			ret = bind(m_socket, m_param.addrun(), sizeof(sockaddr_un));
+			if(param.attr & SOCK_ISIP)
+				ret = bind(m_socket, m_param.addrin(), sizeof(sockaddr_in));
+			else
+				ret = bind(m_socket, m_param.addrun(), sizeof(sockaddr_un));
+
 			if (ret == -1) return -3;
 			ret = listen(m_socket, 32);
 			if (ret == -1) return -4;
@@ -157,11 +168,19 @@ public:
 		if (m_param.attr & SOCK_ISSERVER) {
 			if (pClient == NULL) return -2;
 			CSockParam param;
-			socklen_t len = sizeof(sockaddr_un);
-			int fd = accept(m_socket, param.addrun(), &len);
+			int fd = -1;
+			socklen_t len = 0;
+			if (param.attr & SOCK_ISIP) {
+				len = sizeof(sockaddr_in);
+				fd = accept(m_socket, param.addrin(), &len);
+			}
+			else {
+				len = sizeof(sockaddr_un);
+				fd = accept(m_socket, param.addrun(), &len);
+			}
 
 			if (fd == -1) return -3;
-			*pClient = new CLocalSocket(fd);
+			*pClient = new CSocket(fd);
 			if (*pClient == NULL) return -4;
 			ret = (*pClient)->Init(param);
 			if (ret != 0) {

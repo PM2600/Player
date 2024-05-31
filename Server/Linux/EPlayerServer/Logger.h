@@ -74,7 +74,7 @@ public:
 
 		int ret = m_epoll.Create(1);
 		if (ret != 0) return -3;
-		m_server = new CLocalSocket();
+		m_server = new CSocket();
 		if (m_server == NULL){
 			Close();
 			return -4;
@@ -113,7 +113,7 @@ public:
 
 	static void Trace(const LogInfo& info) {
 		int ret = 0;
-		static thread_local CLocalSocket client;
+		static thread_local CSocket client;
 		if (client == -1) {
 			ret = client.Init(CSockParam("./log/server.sock", 0));
 			if (ret != 0){
@@ -125,7 +125,7 @@ public:
 			printf("%s(%d):[%s] ret=%d client=%d\n", __FILE__, __LINE__, __FUNCTION__, ret, (int)client);
 			ret = client.Link();
 			printf("%s(%d):[%s] ret=%d client=%d\n", __FILE__, __LINE__, __FUNCTION__, ret, (int)client);
-
+			if (ret != 0) printf("errno:%d msg:%s\n", errno, strerror(errno));
 		}
 		ret = client.Send(info);
 		printf("%s(%d):[%s] ret=%d client=%d\n", __FILE__, __LINE__, __FUNCTION__, ret, (int)client);
@@ -156,8 +156,8 @@ private:
 		EPEvents events;
 		std::map<int, CSocketBase*> mapClients;
 		while (m_thread.isValid() && (m_epoll != -1) && (m_server != NULL)) {
-			ssize_t ret = m_epoll.WaitEvents(events, 1);
-			//printf("%s(%d):[%s] ret=%d\n", __FILE__, __LINE__, __FUNCTION__, ret);
+			ssize_t ret = m_epoll.WaitEvents(events, 1000);
+			printf("%s(%d):[%s] ret=%d\n", __FILE__, __LINE__, __FUNCTION__, ret);
 			if (ret < 0) break;
 			if (ret > 0) {
 				ssize_t i = 0;
@@ -197,13 +197,16 @@ private:
 								printf("%s(%d):[%s] r=%d\n", __FILE__, __LINE__, __FUNCTION__, r);
 
 								if (r <= 0) {
-									delete pClient;
 									mapClients[*pClient] = NULL;
+									delete pClient;
+									printf("%s(%d):[%s] r=%d\n", __FILE__, __LINE__, __FUNCTION__, r);
 								}
 								else {
 									printf("%s(%d):[%s] data=%s\n", __FILE__, __LINE__, __FUNCTION__, (char*)data);
 									WriteLog(data);
 								}
+								printf("%s(%d):[%s] r=%d\n", __FILE__, __LINE__, __FUNCTION__, r);
+
 							}
 						}
 					}
