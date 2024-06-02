@@ -1,6 +1,7 @@
 ﻿#include "Process.h"
 #include "Logger.h"
 #include "ThreadPool.h"
+#include "CEdyPlayerServer.h"
 
 int CreateLogServer(CProcess* proc) {//日志服务器
     //printf("%s(%d):%s pid=%d\n", __FILE__, __LINE__, __FUNCTION__, getpid());
@@ -50,8 +51,7 @@ int LogTest() {
     return 0;
 }
 
-int main()
-{
+int old_test() {
     //CProcess::SwithchDeamon();
     CProcess proclog, procclients;
     printf("%s(%d):%s pid=%d\n", __FILE__, __LINE__, __FUNCTION__, getpid());
@@ -77,7 +77,7 @@ int main()
         return -2;
     }
     printf("%s(%d):%s pid=%d\n", __FILE__, __LINE__, __FUNCTION__, getpid());
-    
+
     usleep(100 * 1000);
 
     int fd = open("./test.txt", O_RDWR | O_CREAT | O_APPEND);
@@ -108,5 +108,22 @@ int main()
 
     proclog.SendFD(-1);
     (void)getchar();
+    return 0;
+}
+
+int main()
+{
+    int ret = 0;
+    CProcess proclog;
+    ret = proclog.SetEntryFunction(CreateLogServer, &proclog);
+    ERR_RETURN(ret, -1);
+    ret = proclog.CreateSubProcess();
+    ERR_RETURN(ret, -2);
+    CEdyPlayerServer business(2);
+    CServer server;
+    ret = server.Init(&business);
+    ERR_RETURN(ret, -3);
+    ret = server.Run();
+    ERR_RETURN(ret, -4);
     return 0;
 }

@@ -4,6 +4,7 @@
   正在验证体系结构
   正在启动远程生成
   正在编译源:
+  CServer.cpp
   Epoll.cpp
   Logger.cpp
   main.cpp

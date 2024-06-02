@@ -43,6 +43,12 @@ public:
 		addr_in.sin_port = port;
 		addr_in.sin_addr.s_addr = inet_addr(ip);
 	}
+	CSockParam(const sockaddr_in* addrin, int attr) {
+		this->ip = ip;
+		this->port = port;
+		this->attr = attr;
+		memcpy(&addr_in, addrin, sizeof(addr_in));
+	}
 	CSockParam(const Buffer& path, int attr) {
 		ip = path;
 		addr_un.sun_family = AF_UNIX;
@@ -96,7 +102,7 @@ public:
 	virtual int Close() {
 		m_status = 3;
 		if (m_socket != -1) {
-			if(m_param.attr & SOCK_ISSERVER && ((m_param.attr & SOCK_ISIP) == 0))
+			if((m_param.attr & SOCK_ISSERVER) && ((m_param.attr & SOCK_ISIP) == 0))
 				unlink(m_param.ip);
 			int fd = m_socket;
 			m_socket = -1;
@@ -107,6 +113,8 @@ public:
 
 	virtual operator int() { return m_socket; }
 	virtual operator int() const { return m_socket; }
+	virtual operator const sockaddr_in* () const { return &m_param.addr_in; }
+	virtual operator sockaddr_in* () { return &m_param.addr_in; }
 protected:
 	int m_socket;
 	//状态：0初始化未完成 1初始化完成 2连接完成 3已经关闭
@@ -170,7 +178,8 @@ public:
 			CSockParam param;
 			int fd = -1;
 			socklen_t len = 0;
-			if (param.attr & SOCK_ISIP) {
+			if (m_param.attr & SOCK_ISIP) {
+				param.attr |= SOCK_ISIP;
 				len = sizeof(sockaddr_in);
 				fd = accept(m_socket, param.addrin(), &len);
 			}
@@ -190,7 +199,10 @@ public:
 			}
 		}
 		else {
-			ret = connect(m_socket, m_param.addrun(), sizeof(sockaddr_un));
+			if (m_param.attr & SOCK_ISIP)
+				ret = connect(m_socket, m_param.addrin(), sizeof(sockaddr_in));
+			else
+				ret = connect(m_socket, m_param.addrun(), sizeof(sockaddr_un));
 			if (ret != 0) return -6;
 		}
 		m_status = 2;

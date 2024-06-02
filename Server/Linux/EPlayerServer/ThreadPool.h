@@ -82,6 +82,10 @@ public:
 		}
 		return 0;
 	}
+
+	size_t Size() const {
+		return m_threads.size();
+	}
 private:
 	int TaskDispatch() {
 		while (m_epoll != -1) {
