@@ -2,6 +2,8 @@ D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\CServer.cpp|/home/ada/proje
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer|/home/ada/projects/EPlayerServer
 @D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer|@/home/ada/projects/EPlayerServer
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Epoll.cpp|/home/ada/projects/EPlayerServer/Epoll.cpp
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\HttpParser.cpp|/home/ada/projects/EPlayerServer/HttpParser.cpp
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\http_parser.c|/home/ada/projects/EPlayerServer/http_parser.c
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Logger.cpp|/home/ada/projects/EPlayerServer/Logger.cpp
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\main.cpp|/home/ada/projects/EPlayerServer/main.cpp
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Thread.cpp|/home/ada/projects/EPlayerServer/Thread.cpp
@@ -9,6 +11,8 @@ D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\CEdyPlayerServer.h|/home/ad
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\CServer.h|/home/ada/projects/EPlayerServer/CServer.h
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Epoll.h|/home/ada/projects/EPlayerServer/Epoll.h
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Function.h|/home/ada/projects/EPlayerServer/Function.h
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\HttpParser.h|/home/ada/projects/EPlayerServer/HttpParser.h
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\http_parser.h|/home/ada/projects/EPlayerServer/http_parser.h
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Logger.h|/home/ada/projects/EPlayerServer/Logger.h
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Process.h|/home/ada/projects/EPlayerServer/Process.h
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Socket.h|/home/ada/projects/EPlayerServer/Socket.h
