@@ -55,13 +55,13 @@ public:
 	virtual Buffer Drop() = 0;
 	//增删改查
 	virtual Buffer Insert(const _Table_& values) = 0;
-	virtual Buffer Delete() = 0;
-	virtual Buffer Modify() = 0; //TODO
+	virtual Buffer Delete(const _Table_& values) = 0;
+	virtual Buffer Modify(const _Table_& values) = 0; //TODO
 	virtual Buffer Query() = 0;
 	
 	//创建一个基于表的对象
 	virtual PTable Copy() const = 0;
-
+	virtual void ClearFieldUsed() = 0;
 public:
 	//获取表的全名
 	virtual operator const Buffer() const = 0;
@@ -71,6 +71,12 @@ public:
 	Buffer Name;
 	FieldArray FieldDefine; //列的定义
 	FieldMap Fields; //列的属性映射表
+};
+
+enum {
+	SQL_INSERT = 1,  //插入的列
+	SQL_MODIFY = 2,  //修改的列
+	SQL_CONDITION = 4 //查询条件列
 };
 
 class _Field_ {
@@ -109,4 +115,6 @@ public:
 	unsigned Attr;
 	Buffer Default;
 	Buffer Check;
+	//操作条件
+	unsigned Condition; 
 };
