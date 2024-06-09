@@ -64,7 +64,7 @@ public:
 	//增删改查
 	virtual Buffer Insert(const _Table_& values);
 	virtual Buffer Delete(const _Table_& values);
-	virtual Buffer Modify(const _Table_& values); //TODO
+	virtual Buffer Modify(const _Table_& values); 
 	virtual Buffer Query();
 
 	//创建一个基于表的对象
@@ -78,6 +78,9 @@ public:
 
 class _sqlite3_field_ : public _Field_ {
 public:
+	_sqlite3_field_();
+	virtual ~_sqlite3_field_() {}
+	//_sqlite3_field_(const _sqlite3_field_&);
 	virtual Buffer Create();
 	virtual void LoadFromStr(const Buffer& str);
 	//where语句使用
@@ -85,4 +88,13 @@ public:
 	virtual Buffer toSqlStr() const;
 	//列的全名
 	virtual operator const Buffer() const;
+private:
+	Buffer Str2Hex(const Buffer& data) const;
+	union {
+		bool Bool;
+		int Integer;
+		double Double;
+		Buffer* String;
+	}Value;
+	int nType;
 };

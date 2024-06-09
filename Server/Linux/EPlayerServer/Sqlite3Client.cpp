@@ -128,7 +128,8 @@ _sqlite3_table_::_sqlite3_table_(const _sqlite3_table_& table) {
     Database = table.Database;
     Name = table.Name;
     for (size_t i = 0; i < table.FieldDefine.size(); i++) {
-        PField field = PField(new _sqlite3_field_(*(_sqlite3_field_*)table.FieldDefine[i].get()));
+        PField field = PField(new _sqlite3_field_(*
+            (_sqlite3_field_*)table.FieldDefine[i].get()));
         FieldDefine.push_back(field);
         Fields[field->Name] = field;
     }
@@ -256,4 +257,134 @@ _sqlite3_table_::operator const Buffer() const
         Head = '"' + Database + "\".";
     }
     return Head + '"' + Name + '"';
+}
+
+_sqlite3_field_::_sqlite3_field_() : _Field_()
+{
+    nType = TYPE_NULL;
+    Value.Double = 0.0;
+}
+
+Buffer _sqlite3_field_::Create()
+{
+    Buffer sql = '"' + Name + "\" " + Type + " ";
+    if (Attr & NOT_NULL) {
+        sql += " NOT NULL ";
+    }
+    if (Attr & DEFAULT) {
+        sql += " DEFAULT " + Default + " ";
+    }
+    if (Attr & UNIQUE) {
+        sql += " UNIQUE ";
+    }
+    if (Attr & PRIMARY_KEY) {
+        sql += " PRIMARY KEY ";
+    }
+    if (Attr & CHECK) {
+        sql += " CHECK( " + Check + ") ";
+    }
+    if (Attr & AUTOINCREMENT) {
+        sql += " AUTOINCREMENT ";
+    }
+    return sql;
+}
+
+void _sqlite3_field_::LoadFromStr(const Buffer& str)
+{
+    switch (nType) {
+    case TYPE_NULL:
+        break;
+    case TYPE_BOOL:
+    case TYPE_INT:
+    case TYPE_DATETIME:
+        Value.Integer = atoi(str);
+        break;;
+    case TYPE_REAL:
+        Value.Double = atof(str);
+        break;
+    case TYPE_VARCHAR:
+    case TYPE_TEXT:
+        *Value.String = str;
+        break;
+    case TYPE_BLOB:
+        *Value.String = Str2Hex(str);
+        break;
+    default:
+        TRACEW("type=%d", nType);
+    }
+}
+
+Buffer _sqlite3_field_::toEqualExp() const
+{
+    Buffer sql = (Buffer)*this + " = ";
+    std::stringstream ss;
+    switch (nType) {
+    case TYPE_NULL:
+        sql += " NULL ";
+        break;
+    case TYPE_BOOL:
+    case TYPE_INT:
+    case TYPE_DATETIME:
+        ss << Value.Integer;
+        sql += ss.str() + " ";
+        break;;
+    case TYPE_REAL:
+        ss << Value.Double;
+        sql += ss.str() + " ";
+        break;
+    case TYPE_VARCHAR:
+    case TYPE_TEXT:
+    case TYPE_BLOB:
+        sql += '"' + *Value.String + "\" ";
+        break;
+    default:
+        TRACEW("type=%d", nType);
+        break;
+    }
+    return sql;
+}
+
+Buffer _sqlite3_field_::toSqlStr() const
+{
+    Buffer sql = "";
+    std::stringstream ss;
+    switch (nType) {
+    case TYPE_NULL:
+        sql += " NULL ";
+        break;
+    case TYPE_BOOL:
+    case TYPE_INT:
+    case TYPE_DATETIME:
+        ss << Value.Integer;
+        sql += ss.str() + " ";
+        break;;
+    case TYPE_REAL:
+        ss << Value.Double;
+        sql += ss.str() + " ";
+        break;
+    case TYPE_VARCHAR:
+    case TYPE_TEXT:
+    case TYPE_BLOB:
+        sql += '"' + *Value.String + "\" ";
+        break;
+    default:
+        TRACEW("type=%d", nType);
+        break;
+    }
+    return sql;
+}
+
+_sqlite3_field_::operator const Buffer() const
+{
+    return '"' + Name + '"';
+}
+
+Buffer _sqlite3_field_::Str2Hex(const Buffer& data) const
+{
+    const char* hex = "0123456789ABCDEF";
+    std::stringstream ss;
+    for (auto ch : data) {
+        ss << hex[(unsigned char)ch >> 4] << hex[(unsigned char)ch & 0xF];
+    }
+    return ss.str();
 }
