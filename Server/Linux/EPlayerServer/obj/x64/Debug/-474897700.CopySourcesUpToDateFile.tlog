@@ -4,13 +4,13 @@ D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Epoll.cpp|63852263366407137
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\HttpParser.cpp|638530417952131404|~/projects/EPlayerServer/|
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\http_parser.c|638442791380000000|~/projects/EPlayerServer/|
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Logger.cpp|638522633664501329|~/projects/EPlayerServer/|
-D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\main.cpp|638531275003985718|~/projects/EPlayerServer/|
-D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Sqlite3Client.cpp|638535628759386019|~/projects/EPlayerServer/|
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\main.cpp|638537967441080037|~/projects/EPlayerServer/|
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Sqlite3Client.cpp|638538065275249013|~/projects/EPlayerServer/|
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\sqlite3\sqlite3.c|638442791580000000|~/projects/EPlayerServer/|
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Thread.cpp|638522633663421343|~/projects/EPlayerServer/|
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\CEdyPlayerServer.h|638529425645141470|~/projects/EPlayerServer/|
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\CServer.h|638529435618421185|~/projects/EPlayerServer/|
-D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\DatabaseHelper.h|638535629428147862|~/projects/EPlayerServer/|
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\DatabaseHelper.h|638537877432250858|~/projects/EPlayerServer/|
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Epoll.h|638522633663291329|~/projects/EPlayerServer/|
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Function.h|638529436189613214|~/projects/EPlayerServer/|
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\HttpParser.h|638531300565127487|~/projects/EPlayerServer/|
@@ -19,7 +19,7 @@ D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Logger.h|638527889424604177
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Process.h|638529419450766530|~/projects/EPlayerServer/|
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Public.h|638534539668265707|~/projects/EPlayerServer/|
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Socket.h|638531296823634053|~/projects/EPlayerServer/|
-D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Sqlite3Client.h|638535629602467868|~/projects/EPlayerServer/|
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Sqlite3Client.h|638538062941876498|~/projects/EPlayerServer/|
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\sqlite3\sqlite3.h|638442791580000000|~/projects/EPlayerServer/|
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\sqlite3\sqlite3ext.h|638442791580000000|~/projects/EPlayerServer/|
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Thread.h|638522633663541326|~/projects/EPlayerServer/|
