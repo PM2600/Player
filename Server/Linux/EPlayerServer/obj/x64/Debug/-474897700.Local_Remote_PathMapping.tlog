@@ -7,6 +7,7 @@ D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\HttpParser.cpp|/home/ada/pr
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\http_parser.c|/home/ada/projects/EPlayerServer/http_parser.c
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Logger.cpp|/home/ada/projects/EPlayerServer/Logger.cpp
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\main.cpp|/home/ada/projects/EPlayerServer/main.cpp
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\MysqlClient.cpp|/home/ada/projects/EPlayerServer/MysqlClient.cpp
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Sqlite3Client.cpp|/home/ada/projects/EPlayerServer/Sqlite3Client.cpp
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\sqlite3\sqlite3.c|/home/ada/projects/EPlayerServer/sqlite3/sqlite3.c
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\sqlite3|/home/ada/projects/EPlayerServer/sqlite3
@@ -20,6 +21,7 @@ D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Function.h|/home/ada/projec
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\HttpParser.h|/home/ada/projects/EPlayerServer/HttpParser.h
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\http_parser.h|/home/ada/projects/EPlayerServer/http_parser.h
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Logger.h|/home/ada/projects/EPlayerServer/Logger.h
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\MysqlClient.h|/home/ada/projects/EPlayerServer/MysqlClient.h
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Process.h|/home/ada/projects/EPlayerServer/Process.h
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Public.h|/home/ada/projects/EPlayerServer/Public.h
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Socket.h|/home/ada/projects/EPlayerServer/Socket.h
