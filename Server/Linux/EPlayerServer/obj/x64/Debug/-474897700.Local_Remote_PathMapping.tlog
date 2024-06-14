@@ -1,6 +1,7 @@
-D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\CServer.cpp|/home/ada/projects/EPlayerServer/CServer.cpp
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Crypto.cpp|/home/ada/projects/EPlayerServer/Crypto.cpp
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer|/home/ada/projects/EPlayerServer
 @D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer|@/home/ada/projects/EPlayerServer
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\CServer.cpp|/home/ada/projects/EPlayerServer/CServer.cpp
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\DatabaseHelper.cpp|/home/ada/projects/EPlayerServer/DatabaseHelper.cpp
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Epoll.cpp|/home/ada/projects/EPlayerServer/Epoll.cpp
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\HttpParser.cpp|/home/ada/projects/EPlayerServer/HttpParser.cpp
@@ -14,6 +15,7 @@ D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\sqlite3|/home/ada/projects/
 @D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\sqlite3|@/home/ada/projects/EPlayerServer/sqlite3
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Thread.cpp|/home/ada/projects/EPlayerServer/Thread.cpp
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\CEdyPlayerServer.h|/home/ada/projects/EPlayerServer/CEdyPlayerServer.h
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Crypto.h|/home/ada/projects/EPlayerServer/Crypto.h
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\CServer.h|/home/ada/projects/EPlayerServer/CServer.h
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\DatabaseHelper.h|/home/ada/projects/EPlayerServer/DatabaseHelper.h
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Epoll.h|/home/ada/projects/EPlayerServer/Epoll.h

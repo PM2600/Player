@@ -4,8 +4,6 @@
   正在验证体系结构
   正在启动远程生成
   正在编译源:
-  main.cpp
-D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\MysqlClient.h(112): warning : "DECLARE_TABLE_CLASS" redefined
-D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Sqlite3Client.h(112): message : this is the location of the previous definition
+  HttpParser.cpp
   正在链接对象
   EPlayerServer.vcxproj -> D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\bin\x64\Debug\EPlayerServer.out

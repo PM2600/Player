@@ -323,12 +323,21 @@ int mysql_test() {
     return 0;
 }
 
+#include "Crypto.h"
+
+int cryto_test() {
+    Buffer data = "abcdef";
+    data = Crypto::MD5(data);
+    printf("%s\n", (char*)data);
+    return 0;
+}
 int main()
 {
     //int ret = http_test();
     int ret = 0;
     //ret = sql_test();
-    ret = mysql_test();
+    //ret = mysql_test();
+    ret = cryto_test();
     printf("main:ret = %d\n", ret);
     return ret;
 }
