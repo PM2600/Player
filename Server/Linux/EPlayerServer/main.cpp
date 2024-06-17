@@ -23,7 +23,6 @@ int CreateLogServer(CProcess* proc) {//日志服务器
 
     return 0;
 }
-
 int CreateClientServer(CProcess* proc) {//处理客户端的服务器
     //printf("%s(%d):%s pid=%d\n", __FILE__, __LINE__, __FUNCTION__, getpid());
     int fd = -1;
@@ -42,6 +41,7 @@ int CreateClientServer(CProcess* proc) {//处理客户端的服务器
 int LogTest() {
     char buffer[] = "hello pm2600! 你好";
     usleep(1000 * 100);
+
     TRACEI("here is log %d %c %f %g %s 哈哈 嘻嘻 大家好", 10, 'A', 1.0f, 2.0, buffer);
 
     DUMPD((void*)buffer, (size_t)sizeof(buffer));
@@ -337,7 +337,8 @@ int main()
     int ret = 0;
     //ret = sql_test();
     //ret = mysql_test();
-    ret = cryto_test();
+    //ret = cryto_test();
+    ret = Main();
     printf("main:ret = %d\n", ret);
     return ret;
 }

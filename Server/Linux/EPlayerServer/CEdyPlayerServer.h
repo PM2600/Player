@@ -60,9 +60,16 @@ public:
 	}
 private:
 	int Connected(CSocketBase* pClient) {
+		//客户端连接处理 简单打印客户端信息
+		sockaddr_in* paddr = *pClient;
 		return 0;
 	}
 	int Received(CSocketBase* pClient, const Buffer& data) {
+		//主要业务
+		//HTTP解析
+		//数据库查询
+		//登录请求验证
+		//验证结果的反馈
 		return 0;
 	}
 private:

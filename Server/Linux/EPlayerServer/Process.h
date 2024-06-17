@@ -24,7 +24,7 @@ public:
         m_func = new CFunction<_FUNCTION_, _ARGS_...>(func, args...);
         return 0;
     }
-
+    
     int CreateSubProcess() {
         if (m_func == NULL) return -1;
         int ret = socketpair(AF_LOCAL, SOCK_STREAM, 0, pipes);
@@ -43,7 +43,8 @@ public:
         m_pid = pid;
         return 0;
     }
-
+    
+    //主进程使用，发送连接上来的套接字fd
     int SendFD(int fd) {
         struct msghdr msg;
         iovec iov[2];
@@ -71,7 +72,7 @@ public:
         }
         return 0;
     }
-
+    
     int RecvFD(int& fd) {
         msghdr msg;
         iovec iov[2];
