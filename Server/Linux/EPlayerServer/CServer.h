@@ -35,7 +35,7 @@ public:
 class CBusiness {
 public:
 	CBusiness() : m_connectedcallback(NULL), m_recvcallback(NULL) {}
-	virtual int CBusinessProcess(CProcess* proc) = 0;
+	virtual int BusinessProcess(CProcess* proc) = 0;
 	template<typename _FUNCTION_, typename... _ARGS_>
 	int setConnectedCallback(_FUNCTION_ func, _ARGS_... args) {
 		m_connectedcallback = new CConnectedFunction<_FUNCTION_, _ARGS_...>(func, args...);
