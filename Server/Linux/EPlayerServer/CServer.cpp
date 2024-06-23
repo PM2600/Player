@@ -1,4 +1,4 @@
-#include "CServer.h"
+﻿#include "CServer.h"
 #include "Logger.h"
 
 CServer::CServer()
@@ -12,7 +12,7 @@ int CServer::Init(CBusiness* business, const Buffer& ip, short port)
     int ret = 0;
     if (business == NULL) return -1;
     m_business = business;
-    ret = m_process.SetEntryFunction(&CBusiness::CBusinessProcess, m_business, &m_process);
+    ret = m_process.SetEntryFunction(&CBusiness::BusinessProcess, m_business, &m_process);
     if (ret != 0) return -2;
     ret = m_process.CreateSubProcess();
     if (ret != 0) return -3;
@@ -22,7 +22,7 @@ int CServer::Init(CBusiness* business, const Buffer& ip, short port)
     if (ret != 0) return -5;
     m_server = new CSocket();
     if (m_server == NULL) return -6;
-    ret = m_server->Init(CSockParam(ip, port, SOCK_ISSERVER | SOCK_ISIP));
+    ret = m_server->Init(CSockParam(ip, port, SOCK_ISSERVER | SOCK_ISIP | SOCK_ISREUSE));
     if (ret != 0) return -7;
     ret = m_epoll.Add(*m_server, EpollData((void*)m_server));
     if (ret != 0) return -8;
@@ -57,12 +57,15 @@ int CServer::Close()
 
 int CServer::ThreadFunc()
 {
+    TRACEI("epoll %d server %p", (int)m_epoll, m_server);
     int ret = 0;
     EPEvents events;
     while (m_epoll != -1 && m_server != NULL) {
-        ssize_t size = m_epoll.WaitEvents(events);
+        ssize_t size = m_epoll.WaitEvents(events, 500);
         if (size < 0) break;
+
         if (size > 0) {
+            TRACEI("size: %d event %08X", size, events[0].events);
             for (ssize_t i = 0; i < size; i++) {
                 if (events[i].events & EPOLLERR) {
                     break;
@@ -73,9 +76,12 @@ int CServer::ThreadFunc()
                         ret = m_server->Link(&pClient);
                         if (ret != 0) continue;
                         ret = m_process.SendSocket(*pClient, *pClient);
+                        TRACEI("SendSocket %d", ret);
+                        int s = *pClient;
                         delete pClient;
+                        
                         if (ret != 0) {
-                            TRACEE("send client %d failed!", (int)*pClient);
+                            TRACEE("send client %d failed!", s);
                             continue;
                         }
                     }
@@ -83,5 +89,6 @@ int CServer::ThreadFunc()
             }
         }
     }
+    TRACEI("服务器终止");
     return 0;
 }

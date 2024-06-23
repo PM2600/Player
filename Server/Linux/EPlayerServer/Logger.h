@@ -79,7 +79,7 @@ public:
 			Close();
 			return -4;
 		}
-		ret = m_server->Init(CSockParam("./log/server.sock", (int)SOCK_ISSERVER));
+		ret = m_server->Init(CSockParam("./log/server.sock", (int)SOCK_ISSERVER | SOCK_ISREUSE));
 		if (ret != 0) {
 			Close();
 			return -5;
@@ -157,7 +157,7 @@ private:
 		std::map<int, CSocketBase*> mapClients;
 		while (m_thread.isValid() && (m_epoll != -1) && (m_server != NULL)) {
 			ssize_t ret = m_epoll.WaitEvents(events, 1000);
-			printf("%s(%d):[%s] ret=%d\n", __FILE__, __LINE__, __FUNCTION__, ret);
+			//printf("%s(%d):[%s] ret=%d\n", __FILE__, __LINE__, __FUNCTION__, ret);
 			if (ret < 0) break;
 			if (ret > 0) {
 				ssize_t i = 0;

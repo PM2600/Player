@@ -6,6 +6,11 @@ D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\DatabaseHelper.cpp|/home/ad
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Epoll.cpp|/home/ada/projects/EPlayerServer/Epoll.cpp
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\HttpParser.cpp|/home/ada/projects/EPlayerServer/HttpParser.cpp
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\http_parser.c|/home/ada/projects/EPlayerServer/http_parser.c
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\jsoncpp\json_reader.cpp|/home/ada/projects/EPlayerServer/jsoncpp/json_reader.cpp
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\jsoncpp|/home/ada/projects/EPlayerServer/jsoncpp
+@D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\jsoncpp|@/home/ada/projects/EPlayerServer/jsoncpp
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\jsoncpp\json_value.cpp|/home/ada/projects/EPlayerServer/jsoncpp/json_value.cpp
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\jsoncpp\json_writer.cpp|/home/ada/projects/EPlayerServer/jsoncpp/json_writer.cpp
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Logger.cpp|/home/ada/projects/EPlayerServer/Logger.cpp
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\main.cpp|/home/ada/projects/EPlayerServer/main.cpp
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\MysqlClient.cpp|/home/ada/projects/EPlayerServer/MysqlClient.cpp
@@ -22,6 +27,17 @@ D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Epoll.h|/home/ada/projects/
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Function.h|/home/ada/projects/EPlayerServer/Function.h
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\HttpParser.h|/home/ada/projects/EPlayerServer/HttpParser.h
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\http_parser.h|/home/ada/projects/EPlayerServer/http_parser.h
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\jsoncpp\allocator.h|/home/ada/projects/EPlayerServer/jsoncpp/allocator.h
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\jsoncpp\assertions.h|/home/ada/projects/EPlayerServer/jsoncpp/assertions.h
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\jsoncpp\config.h|/home/ada/projects/EPlayerServer/jsoncpp/config.h
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\jsoncpp\forwards.h|/home/ada/projects/EPlayerServer/jsoncpp/forwards.h
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\jsoncpp\json.h|/home/ada/projects/EPlayerServer/jsoncpp/json.h
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\jsoncpp\json_features.h|/home/ada/projects/EPlayerServer/jsoncpp/json_features.h
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\jsoncpp\json_tool.h|/home/ada/projects/EPlayerServer/jsoncpp/json_tool.h
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\jsoncpp\reader.h|/home/ada/projects/EPlayerServer/jsoncpp/reader.h
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\jsoncpp\value.h|/home/ada/projects/EPlayerServer/jsoncpp/value.h
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\jsoncpp\version.h|/home/ada/projects/EPlayerServer/jsoncpp/version.h
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\jsoncpp\writer.h|/home/ada/projects/EPlayerServer/jsoncpp/writer.h
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Logger.h|/home/ada/projects/EPlayerServer/Logger.h
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\MysqlClient.h|/home/ada/projects/EPlayerServer/MysqlClient.h
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Process.h|/home/ada/projects/EPlayerServer/Process.h
@@ -32,4 +48,5 @@ D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\sqlite3\sqlite3.h|/home/ada
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\sqlite3\sqlite3ext.h|/home/ada/projects/EPlayerServer/sqlite3/sqlite3ext.h
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\Thread.h|/home/ada/projects/EPlayerServer/Thread.h
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\ThreadPool.h|/home/ada/projects/EPlayerServer/ThreadPool.h
+D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\jsoncpp\json_valueiterator.inl|/home/ada/projects/EPlayerServer/jsoncpp/json_valueiterator.inl
 D:\2.5\C++\EPlayerServer\EPlayerServer\EPlayerServer\|/home/ada/projects/EPlayerServer/

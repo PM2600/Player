@@ -102,14 +102,14 @@ public:
 
     int SendSocket(int fd, const sockaddr_in* addrin) {
         struct msghdr msg;
-        iovec iov[2];
-        char buf[2][10] = { "PM25", "PM26" };
-        iov[0].iov_base = (void*)addrin;
-        iov[0].iov_len = sizeof(sockaddr_in);
-        iov[1].iov_base = buf[1];
-        iov[1].iov_len = sizeof(buf[1]);
-        msg.msg_iov = iov;
-        msg.msg_iovlen = 2;
+        iovec iov;
+        char buf[20] = "";
+        bzero(&msg, sizeof(msg));
+        memcpy(buf, addrin, sizeof(sockaddr_in));
+        iov.iov_base = buf;
+        iov.iov_len = sizeof(sockaddr_in);
+        msg.msg_iov = &iov;
+        msg.msg_iovlen = 1;
 
         cmsghdr* cmsg = (cmsghdr*)calloc(1, CMSG_LEN(sizeof(int)));
         if (cmsg == NULL) return -1;
@@ -130,14 +130,13 @@ public:
 
     int RecvSocket(int& fd, sockaddr_in* addrin) {
         msghdr msg;
-        iovec iov[2];
-        char buf[][10] = { "", "" };
-        iov[0].iov_base = addrin;
-        iov[0].iov_len = sizeof(addrin);
-        iov[1].iov_base = buf[1];
-        iov[1].iov_len = sizeof(buf[1]);
-        msg.msg_iov = iov;
-        msg.msg_iovlen = 2;
+        iovec iov;
+        char buf[20] = "";
+        bzero(&msg, sizeof(msg));
+        iov.iov_base = buf;
+        iov.iov_len = sizeof(sockaddr_in);
+        msg.msg_iov = &iov;
+        msg.msg_iovlen = 1;
 
         cmsghdr* cmsg = (cmsghdr*)calloc(1, CMSG_LEN(sizeof(int)));
         cmsg->cmsg_len = CMSG_LEN(sizeof(int));
@@ -146,10 +145,12 @@ public:
         msg.msg_control = cmsg;
         msg.msg_controllen = CMSG_LEN(sizeof(int));
         ssize_t ret = recvmsg(pipes[0], &msg, 0);
+        free(cmsg);
         if (ret == -1) {
-            free(cmsg);
+            printf("************errno %d msg: %s\n", errno, strerror(errno));
             return -2;
         }
+        memcpy(addrin, buf, sizeof(sockaddr_in));
         fd = *(int*)CMSG_DATA(cmsg);
         free(cmsg);
         return 0;
