@@ -18,8 +18,7 @@ CHttpParser::CHttpParser()
 }
 
 CHttpParser::~CHttpParser()
-{
-}
+{}
 
 CHttpParser::CHttpParser(const CHttpParser& http)
 {
@@ -51,7 +50,8 @@ CHttpParser& CHttpParser::operator=(const CHttpParser& http)
 size_t CHttpParser::Parser(const Buffer& data)
 {
 	m_complete = false;
-	size_t ret = http_parser_execute(&m_parser, &m_settings, data, data.size());
+	size_t ret = http_parser_execute(
+		&m_parser, &m_settings, data, data.size());
 	if (m_complete == false) {
 		m_parser.http_errno = 0x7F;
 		return 0;
@@ -152,16 +152,14 @@ UrlParser::UrlParser(const Buffer& url)
 
 int UrlParser::Parser()
 {
-	//分三步：协议、域名和端口、uri
-
+	//分三步：协议、域名和端口、uri、键值对
 	//解析协议
 	const char* pos = m_url;
 	const char* target = strstr(pos, "://");
-	if (target == NULL) return -1;
+	if (target == NULL)return -1;
 	m_protocol = Buffer(pos, target);
-	pos = target + 3;
-
 	//解析域名和端口
+	pos = target + 3;
 	target = strchr(pos, '/');
 	if (target == NULL) {
 		if (m_protocol.size() + 3 >= m_url.size())
@@ -169,8 +167,8 @@ int UrlParser::Parser()
 		m_host = pos;
 		return 0;
 	}
-	Buffer value = Buffer(pos, target); // www.baidu.com:80/
-	if (value.size() == 0) return -3;
+	Buffer value = Buffer(pos, target);
+	if (value.size() == 0)return -3;
 	target = strchr(value, ':');
 	if (target != NULL) {
 		m_host = Buffer(value, target);
@@ -188,32 +186,33 @@ int UrlParser::Parser()
 	}
 	else {
 		m_uri = Buffer(pos + 1, target);
-		//解析key=value
+		//解析key和value
 		pos = target + 1;
 		const char* t = NULL;
 		do {
 			target = strchr(pos, '&');
 			if (target == NULL) {
 				t = strchr(pos, '=');
-				if (t == NULL) return -4;
+				if (t == NULL)return -4;
 				m_values[Buffer(pos, t)] = Buffer(t + 1);
 			}
 			else {
 				Buffer kv(pos, target);
 				t = strchr(kv, '=');
-				if (t == NULL) return -5;
+				if (t == NULL)return -5;
 				m_values[Buffer(kv, t)] = Buffer(t + 1, (char*)kv + kv.size());
 				pos = target + 1;
 			}
 		} while (target != NULL);
 	}
+
 	return 0;
 }
 
 Buffer UrlParser::operator[](const Buffer& name) const
 {
 	auto it = m_values.find(name);
-	if (it == m_values.end()) return Buffer();
+	if (it == m_values.end())return Buffer();
 	return it->second;
 }
 

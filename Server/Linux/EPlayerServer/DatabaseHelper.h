@@ -27,21 +27,20 @@ public:
 	//带结果的执行
 	virtual int Exec(const Buffer& sql, Result& result, const _Table_& table) = 0;
 	//开启事务
-	virtual int StartTransaction() = 0;	
+	virtual int StartTransaction() = 0;
 	//提交事务
-	virtual int CommitTransaction() = 0;  
+	virtual int CommitTransaction() = 0;
 	//回滚事务
-	virtual int RollbackTransaction() = 0; 
+	virtual int RollbackTransaction() = 0;
 	//关闭连接
 	virtual int Close() = 0;
 	//是否连接
 	virtual bool IsConnected() = 0;
 };
 
+//表和列的基类的实现
 class _Field_;
-//表和列的基类
 using PField = std::shared_ptr<_Field_>;
-
 using FieldArray = std::vector<PField>;
 using FieldMap = std::map<Buffer, PField>;
 
@@ -52,31 +51,33 @@ public:
 	virtual ~_Table_() {}
 	//返回创建的SQL语句
 	virtual Buffer Create() = 0;
+	//删除表
 	virtual Buffer Drop() = 0;
 	//增删改查
+	//TODO:参数进行优化
 	virtual Buffer Insert(const _Table_& values) = 0;
 	virtual Buffer Delete(const _Table_& values) = 0;
-	virtual Buffer Modify(const _Table_& values) = 0; //TODO
+	//TODO:参数进行优化
+	virtual Buffer Modify(const _Table_& values) = 0;
 	virtual Buffer Query(const Buffer& condition = "") = 0;
-	
 	//创建一个基于表的对象
-	virtual PTable Copy() const = 0;
+	virtual PTable Copy()const = 0;
 	virtual void ClearFieldUsed() = 0;
 public:
 	//获取表的全名
 	virtual operator const Buffer() const = 0;
 public:
-	//表所属的db的名称
+	//表所属的DB的名称
 	Buffer Database;
 	Buffer Name;
-	FieldArray FieldDefine; //列的定义
-	FieldMap Fields; //列的属性映射表
+	FieldArray FieldDefine;//列的定义（存储查询结果）
+	FieldMap Fields;//列的定义映射表
 };
 
 enum {
-	SQL_INSERT = 1,  //插入的列
-	SQL_MODIFY = 2,  //修改的列
-	SQL_CONDITION = 4 //查询条件列
+	SQL_INSERT = 1,//插入的列
+	SQL_MODIFY = 2,//修改的列
+	SQL_CONDITION = 4//查询条件列
 };
 
 enum {
@@ -97,11 +98,11 @@ using SqlType = enum {
 	TYPE_REAL = 8,
 	TYPE_VARCHAR = 16,
 	TYPE_TEXT = 32,
-	TYPE_BLOB = 64,
+	TYPE_BLOB = 64
 };
 
-
-class _Field_ {
+class _Field_
+{
 public:
 	_Field_() {}
 	_Field_(const _Field_& field) {
@@ -125,8 +126,8 @@ public:
 public:
 	virtual Buffer Create() = 0;
 	virtual void LoadFromStr(const Buffer& str) = 0;
-	//where语句使用
-	virtual Buffer toEqualExp() const = 0; 
+	//where 语句使用的
+	virtual Buffer toEqualExp() const = 0;
 	virtual Buffer toSqlStr() const = 0;
 	//列的全名
 	virtual operator const Buffer() const = 0;
@@ -139,7 +140,7 @@ public:
 	Buffer Check;
 public:
 	//操作条件
-	unsigned Condition; 
+	unsigned Condition;
 	union {
 		bool Bool;
 		int Integer;

@@ -231,7 +231,7 @@ Buffer _mysql_table_::Query(const Buffer& condition)
 	}
 	sql += " FROM " + (Buffer)*this + " ";
 	if (condition.size() > 0) {
-		sql += "WHERE " + condition;
+		sql += " WHERE " + condition;
 	}
 	sql += ";";
 	printf("sql = %s\n", (char*)sql);

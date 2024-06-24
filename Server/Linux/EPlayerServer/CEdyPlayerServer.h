@@ -10,7 +10,7 @@
 DECLARE_TABLE_CLASS(edoyunLogin_user_mysql, _mysql_table_)
 DECLARE_MYSQL_FIELD(TYPE_INT, user_id, NOT_NULL | PRIMARY_KEY | AUTOINCREMENT, "INTEGER", "", "", "")
 DECLARE_MYSQL_FIELD(TYPE_VARCHAR, user_qq, NOT_NULL, "VARCHAR", "(15)", "", "")  //QQ号
-DECLARE_MYSQL_FIELD(TYPE_VARCHAR, user_phone, DEFAULT, "VARCHAR", "(11)", "'18888888888'", "")  //手机
+DECLARE_MYSQL_FIELD(TYPE_VARCHAR, user_phone, DEFAULT, "VARCHAR", "(50)", "`18888888888`", "")  //手机
 DECLARE_MYSQL_FIELD(TYPE_TEXT, user_name, NOT_NULL, "TEXT", "", "", "")    //姓名
 DECLARE_MYSQL_FIELD(TYPE_TEXT, user_nick, NOT_NULL, "TEXT", "", "", "")    //昵称
 DECLARE_MYSQL_FIELD(TYPE_TEXT, user_wechat, DEFAULT, "TEXT", "", "NULL", "")
@@ -30,7 +30,7 @@ DECLARE_MYSQL_FIELD(TYPE_TEXT, user_password, NOT_NULL, "TEXT", "", "", "")
 DECLARE_MYSQL_FIELD(TYPE_INT, user_birthday, NONE, "DATETIME", "", "", "")
 DECLARE_MYSQL_FIELD(TYPE_TEXT, user_describe, NONE, "TEXT", "", "", "")
 DECLARE_MYSQL_FIELD(TYPE_TEXT, user_education, NONE, "TEXT", "", "", "")
-DECLARE_MYSQL_FIELD(TYPE_INT, user_register_time, DEFAULT, "DATETIME", "", "LOCALTIME()", "")
+DECLARE_MYSQL_FIELD(TYPE_INT, user_register_time, DEFAULT, "DATETIME", "", "", "")
 DECLARE_TABLE_CLASS_EDN()
 
 /*
@@ -171,7 +171,7 @@ private:
 				//数据库的查询
 				edoyunLogin_user_mysql dbuser;
 				Result result;
-				Buffer sql = dbuser.Query("user_name=\"" + user + "\"");
+				Buffer sql = dbuser.Query("`user_name` = \"" + user + "\"");
 				ret = m_db->Exec(sql, result, dbuser);
 				if (ret != 0) {
 					TRACEE("sql=%s ret=%d", (char*)sql, ret);
