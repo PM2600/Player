@@ -152,7 +152,6 @@ int http_test() {
     }
     printf("method %d url %s\n", parser.Method(), (char*)parser.Url());
 
-
     str = "GET /favicon.ico HTTP/1.1\r\n"
         "Host: 0.0.0.0=5000\r\n"
         "User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9) Gecko/2008061015 Firefox/3.0\r\n"
